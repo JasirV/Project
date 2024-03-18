@@ -4,9 +4,10 @@ const Comment=require('./Comment')
 const Reaction=require('./Reactions')
 
 
+
 const PostSchema=new Schema(
     {
-        owner:{
+        userId:{
             type:Schema.Types.ObjectId,
             ref:"user",
             required:treu
@@ -22,6 +23,10 @@ const PostSchema=new Schema(
         cloudinary_id:{
             type:String
         },
+        likes:[{
+            type:String
+        }],
+        Comments:[{type:Schema.Types.ObjectId,ref:'Comments'}]
     },
     {timestamps:true}
 );
