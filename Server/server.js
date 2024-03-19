@@ -1,17 +1,14 @@
-const path =require('path')
-const express=require('express');
-const cors=require('cors')
-const dotenv =require("dotenv")
-const bodyParse =require('body-parser')
-const helmet=require('helmet')
-const app=express();
 
-dotenv.config();
+const dotenv =require("dotenv")
+const app=require("./app");
+
+dotenv.config({path:'./.env'});
+const connect=require('./config/config')
 
 const PORT=process.env.PORT||3001;
 
 
-
+connect()
 
 app.listen(PORT,()=>{
     console.log(`Server run on ${PORT}`);

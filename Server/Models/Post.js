@@ -10,7 +10,7 @@ const PostSchema=new Schema(
         userId:{
             type:Schema.Types.ObjectId,
             ref:"user",
-            required:treu
+            required:true
         },
         text:{
             type:String,
