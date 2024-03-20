@@ -1,5 +1,7 @@
 const UserSchema=require("../Models/Users")
-const bcrypt =require('bcryptjs')
+const bcrypt =require('bcryptjs');
+const {sendVerificationEmail} = require("../Utils/sendEmail");
+const { hashStrting } = require("../Utils/jwt");
 
 const register=async(req,res)=>{
     const {firstName,lastName,email,password,userName}=req.body;
@@ -21,19 +23,17 @@ const register=async(req,res)=>{
                 message:'This User Olderay exist'
             })
         }
+        const hashedPassword =await hashStrting(password)
         const user=await UserSchema.create({
             firstName,
             lastName,
-            email,
-            password,
             userName,
+            email,
+            password:hashedPassword,
+            
         })
-        res.status(200).json({
-            status:'success',
-            data:{
-                user
-            }
-        })
+        //send password verificatrion 
+        sendVerificationEmail(user,res)
         
     } catch (error) {
         console.log(error);
@@ -44,7 +44,7 @@ const register=async(req,res)=>{
 const loginUser=async (req,res)=>{
     const { userName, password } = req.body;
 
-    const user = await UserSchema.findOne({ userName: userName }).select('+password');
+    const user = await UserSchema.findOne({ $or: [{ userName: userName }, { email: email }] }).select('+password');
     if(!user){
         return res.status(400).json({
             status:'fail',

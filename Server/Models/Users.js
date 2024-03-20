@@ -150,25 +150,6 @@ UserSchema.pre('save',(next)=>{
     next();
 })
 
-// password bcrypt
-
-UserSchema.pre("save", async function (next) {
-    try {
-      if (!this.isModified("password")) {
-        return next();
-      }
-  
-      const hashedPassword = await bcrypt.hash(this.password, 10);
-      this.password = hashedPassword;
-      next();
-    } catch (error) {
-      console.log("Error hashing password", error);
-      next(error);
-    }
-  });
-  UserSchema.method.comarePassword = async (password, passwordDB) => {
-    return await bcrypt.compare(password, passwordDB);
-  };
   
 
 module.exports=monsgoose.model('user',UserSchema)
