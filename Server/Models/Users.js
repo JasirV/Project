@@ -6,7 +6,8 @@ const Comment=require('./Comment')
 const Reaction=require('./Reactions')
 const Friends=require('./Friends')
 const Notificationi=require('./Notification')
-const {generateFromEmail}=require('unique-username-generator')
+const {generateFromEmail}=require('unique-username-generator');
+const { stringify } = require('uuid');
 
 const UserSchema=new Schema(
     {
@@ -86,6 +87,8 @@ const UserSchema=new Schema(
                 enum:["Single","Marrid","RelationShip"]
             }
         },
+        views:[{typoe:String}],
+        verified:{type:Boolean,default:false},
         instagram:{
             type:String
         },

@@ -1,7 +1,7 @@
 const UserSchema=require("../Models/Users")
 const bcrypt =require('bcryptjs');
-const {sendVerificationEmail} = require("../Utils/sendEmail");
-const { hashStrting } = require("../Utils/jwt");
+const sendVerificationEmail = require("../Utils/sendEmail");
+const { hashStrting, comparePassword } = require("../Utils/jwt");
 
 const register=async(req,res)=>{
     const {firstName,lastName,email,password,userName}=req.body;
@@ -43,6 +43,7 @@ const register=async(req,res)=>{
 
 const loginUser=async (req,res)=>{
     const { userName, password } = req.body;
+    const {email}=req.body;
 
     const user = await UserSchema.findOne({ $or: [{ userName: userName }, { email: email }] }).select('+password');
     if(!user){
@@ -51,14 +52,20 @@ const loginUser=async (req,res)=>{
             message:"Invalid Input"
         })
     }
+    if(!user?.verified){
+        return res.status(404).json({
+            status:'failed',
+            message:'User email is not verified .Check your email account and verify your eamil'
+        })
+    }
     if(!userName||!user.password){
         return res.status(400).json({
             status:"fail",
             message:'Invalid Inputs'
         })
     }
-
-    const matchPassword=await bcrypt.compare(password,user.password);
+    //comapre password
+    const matchPassword=await comparePassword(password,user.password);
     if(!matchPassword){
         return res.status(401).json({
             status:'fail',
