@@ -57,8 +57,7 @@ const loginUser=async (req,res)=>{
             message:'Invalid Inputs'
         })
     }
-    console.log(password);
-    console.log(user.password);
+
     const matchPassword=await bcrypt.compare(password,user.password);
     if(!matchPassword){
         return res.status(401).json({
