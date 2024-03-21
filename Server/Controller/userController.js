@@ -1,7 +1,7 @@
 const UserSchema=require("../Models/Users")
 const bcrypt =require('bcryptjs');
 const sendVerificationEmail = require("../Utils/sendEmail");
-const { hashStrting, comparePassword } = require("../Utils/jwt");
+const { hashStrting, comparePassword, tokengenerator } = require("../Utils/jwt");
 
 const register=async(req,res)=>{
     const {firstName,lastName,email,password,userName}=req.body;
@@ -32,8 +32,8 @@ const register=async(req,res)=>{
             password:hashedPassword,
             
         })
-        //send password verificatrion 
-        sendVerificationEmail(user,res)
+        const token=tokengenerator(user._id) 
+        sendVerificationEmail(user,res,token)
         
     } catch (error) {
         console.log(error);
@@ -45,6 +45,7 @@ const loginUser=async (req,res)=>{
     const { userName, password } = req.body;
     const {email}=req.body;
 
+    const respons=await ChekEmail
     const user = await UserSchema.findOne({ $or: [{ userName: userName }, { email: email }] }).select('+password');
     if(!user){
         return res.status(400).json({
