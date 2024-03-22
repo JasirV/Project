@@ -1,9 +1,23 @@
 import React from 'react'
 
-const TextInput = React.forwardRef() => {
+const TextInput = React.forwardRef(({
+  type,placeholder,styles,labe,labelStyles,register,name,error,ref
+}) => {
   return (
-    <div>TextInput</div>
+    <div className='w-full flex flex-col mt-2'>
+      {
+        labe&&(<p className={`text-ascent-2 text-sm mb-2 ${labelStyles}`}>{labe}</p>)
+      }
+      <div>
+        <input type={type} name={name} placeholder={placeholder} ref={ref} className={`bg=secondary rounded border border-[#66666690] outlne-none text-sm text-ascent-1 px-4 py-3 placehilde:text-[#666] ${styles}`} {...register} aria-invalid={error?"true":"false"} />
+        
+      </div>
+      {error&&(
+        <span className='text-xs text-[#f64949fe] mt-0.5'>{error}</span>
+      )}
+
+    </div>
   )
 }
-
+)
 export default TextInput
