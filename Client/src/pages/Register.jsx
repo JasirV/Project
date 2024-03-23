@@ -10,7 +10,11 @@ import TextInput from '../components/TextInput';
 import Loading from '../components/Loading';
 import CustomeButton from '../components/CustomeButton';
 import BgImage from '../assets/social-media-cropped.png';
+import axios from 'axios';
 const Register = () => {
+  const [errMsg, setErrMsg] = useState("")
+  const [submit, setSubmit] = useState(false)
+  const dispatch = useDispatch()
   const {
     register, handleSubmit,
     getValues,
@@ -19,11 +23,33 @@ const Register = () => {
     mode: "onChange"
   })
   const onSubmit = async (data) => {
-
+setSubmit(true)
+try {
+  const res = await axios.post(
+    "http://localhost:3001/register",
+    data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }
+  )
+  console.log(res);
+  if(res?.status==="fail"){
+setErrMsg(res)
+  }else{
+    setErrMsg(res);
+    setInterval(()=>{
+      window.location.replace("/login")
+    },5000)
   }
-  const [errMsg, setErrMsg] = useState("")
-  const [submit, setSubmit] = useState(false)
-  const dispatch = useDispatch()
+  setSubmit(false)
+} catch (error) {
+  console.log(error);
+  setSubmit(false)
+}
+  }
+
   return (
     <div className='bg-bgColor w-full h-screen flex items-center justify-center p-6'>
       <div className='w-full md:w-2/3 h-fit lg:h-full 2xl:h-5/6 py-8 lg:py-0 flex flex-row-reverse bg-primary rounded-xl overflow-hidden shadow-xl'>

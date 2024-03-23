@@ -30,7 +30,6 @@ const UserSchema=new Schema(
         },
         userName:{
             type:String,
-            require:true,
             trim:true,
             unique:true,
             text:true

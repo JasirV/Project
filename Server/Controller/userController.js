@@ -27,7 +27,6 @@ const register=async(req,res)=>{
         const user=await UserSchema.create({
             firstName,
             lastName,
-            userName,
             email,
             password:hashedPassword,
             

@@ -5,6 +5,15 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/ResetPassword";
 import {useSelector} from 'react-redux'
+import axios from 'axios'
+const token=localStorage.getItem('token')
+export const Axios=axios.create({
+  baseURL:'http://localhost:3001/',
+  headers:{
+    "Content-Type":'application/json',
+    Authorization:token?`Bearer${token}`:""
+  }
+})
 
 function Layout(){
   const {user}=useSelector(state=>state.user);
