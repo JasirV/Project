@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { user } from "../components/data";
 
 const userSlice = createSlice({
     name: 'user',
     initialState: {
-        user: JSON.parse(window?.localStorage.getItem('user')) ?? {},
+        user: JSON.parse(window?.localStorage.getItem('user')) ?? user,
         edit: false
     },
     reducers: {

@@ -7,11 +7,12 @@ import CustomeButton from './CustomeButton';
 import { useForm } from 'react-hook-form';
 import {BsMoon, BsSunFill } from 'react-icons/bs';
 import {IoMdNotificationsOutline} from 'react-icons/io'
+import Logout from '../ReduX/userSlice'
 const TopBar = () => {
     const {theme}=useSelector((state)=>state.theme)
     const {user}=useSelector((state)=>state.user)
     const dispath=useDispatch();
-    const{register,handleSubmit,formState:{errors}}=useForm
+    const{register,handleSubmit,formState:{errors}}=useForm()
     const handleSearch=async (data)=>{}
   return (
     <div className='topbar w-full flex items-center justify-between py-3 md:py-6 px-4 bg-primary'>
@@ -35,6 +36,11 @@ const TopBar = () => {
         </button>
         <div className='hidden lg:flex'>
             <IoMdNotificationsOutline />
+        </div>
+        <div>
+            <CustomeButton onClick={()=>dispath(Logout())}
+            titile='Log Out'
+            containerStyle='text-sm text-ascent-1 px-4 md:px-6 py-1 md:py-2 border border-[#666] rounded-full' />
         </div>
 
         </div>
