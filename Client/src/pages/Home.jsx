@@ -4,7 +4,8 @@ import TopBar from '../components/TopBar'
 import ProfileCard from '../components/ProfileCard'
 
 const Home = () => {
-  const {user} =useSelector((state)=>state.user)
+  const {user} =localStorage.getItem('userId')
+  //useSelector((state)=>state.user)
   return (
     <div className='home w-full px- lg:px-10 pb-20 2xl:px-40 bg-bgColor lg:rounded-lg h-screen overflow-hidden'>
       <TopBar/>

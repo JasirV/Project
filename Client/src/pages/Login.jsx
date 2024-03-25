@@ -10,6 +10,7 @@ import TextInput from '../components/TextInput';
 import Loading from '../components/Loading';
 import CustomeButton from '../components/CustomeButton';
 import BgImage from '../assets/social-media-cropped.png';
+import axios from 'axios';
 const Login = () => {
   const {
     register,handleSubmit,
@@ -18,6 +19,20 @@ const Login = () => {
     mode:"onChange"
   })
   const onSubmit=async (data)=>{
+    setSubmit(true);
+    try {
+      const res= await axios.post('http://localhost:3001/login',data)
+      console.log(res.data.data.user);
+      if(res.status===200){
+        localStorage.setItem('userId',`${res.data.data.user._id}`);
+        setInterval(()=>{
+          window.location.replace("/")
+        },5000)
+      }
+      
+    } catch (error) {
+console.log(error);      
+    }
 
   }
   const [errMsg,setErrMsg]=useState("")

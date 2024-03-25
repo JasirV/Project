@@ -5,6 +5,7 @@ const userRouter=express.Router()
 
 userRouter.post('/register',userController.register)
 .post("/login",userController.loginUser)
+.get('/profilesection',userController.profilesetion)
 
 
 

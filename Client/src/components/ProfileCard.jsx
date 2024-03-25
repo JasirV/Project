@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { user } from './data'
 import { UseDispatch,useDispatch,useSelector } from 'react-redux';
@@ -15,9 +15,25 @@ import {CiLocationOn} from 'react-icons/ci'
 import moment from 'moment';
 import NoProfile from '../assets/ProfilePng.png'
 import { updateProfile } from '../ReduX/userSlice';
+import axios from 'axios';
 
-const ProfileCard = ({user}) => {
+const  ProfileCard = ({user}) => {
     const {user:data,edit}=useSelector((state)=>state.user)
+    const [users,setusers]=useState()
+    const userId=localStorage.getItem('userId')
+    console.log(userId);
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`http://localhost:3001/profilesection`,userId);
+          console.log(response.data); 
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+  
+      fetchData();
+    }, []);
     const dispatch =useDispatch();
   return (
     <div>

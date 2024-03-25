@@ -44,21 +44,23 @@ const loginUser=async (req,res)=>{
     const { userName, password } = req.body;
     const {email}=req.body;
 
-    const respons=await ChekEmail
-    const user = await UserSchema.findOne({ $or: [{ userName: userName }, { email: email }] }).select('+password');
+    // const respons=await ChekEmail()
+    // $or: [{ userName: userName },
+    const user = await UserSchema.findOne(  { email: email }).select('+password');
     if(!user){
         return res.status(400).json({
             status:'fail',
             message:"Invalid Input"
         })
     }
+    console.log(user);
     if(!user?.verified){
         return res.status(404).json({
             status:'failed',
             message:'User email is not verified .Check your email account and verify your eamil'
         })
     }
-    if(!userName||!user.password){
+    if(!user.password){
         return res.status(400).json({
             status:"fail",
             message:'Invalid Inputs'
@@ -83,7 +85,31 @@ const loginUser=async (req,res)=>{
     })
 }
 
+const profilesetion=async (req,res)=>{
+    const {userId}=req.body;
+    console.log(userId);
+    if(!userId){
+        return res.status(404).json({
+            status:"fail",
+            message:"Need For User"
+        })
+    }
+    const user= await UserSchema.findOne({_id:userId})
+    console.log(user);
+    if(!user){
+        return res.status(404).json({
+            status:'fail',
+            message:'User Not Found The User Datas'
+        })
+    }
+    res.status(200).json({
+        status:"success",
+        message:"successfully fecth the user",
+        data:user
+    })
+}
+
 
 module.exports={
-    loginUser,register
+    loginUser,register,profilesetion
 }
