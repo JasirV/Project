@@ -80,6 +80,20 @@ const loginUser=async (req,res)=>{
     res.sendFile(path.join(__dirname,''));
 }
 
+//RESET PASSWORD
+
+const resetPassword=async(req,res)=>{
+    const {email}=req.boby;
+    const user=await UserSchema.findOne({email})
+    if(!user){
+        return res.status(404).json({
+            status:'fail',
+            message:'Email address not found'
+        })
+    }
+    const data=await 'hai'
+}
+
 const profilesetion=async (req,res)=>{
     const {userId}=req.body;
     console.log(userId);
