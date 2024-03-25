@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { BsShare } from "react-icons/bs";
@@ -11,23 +11,13 @@ import Loading from '../components/Loading';
 import CustomeButton from '../components/CustomeButton';
 import BgImage from '../assets/social-media-cropped.png';
 import axios from 'axios';
-import Modal from 'react-modal';
 
 const Register = () => {
+  const navigation=useNavigate()
   const [errMsg, setErrMsg] = useState("")
   const [submit, setSubmit] = useState(false)
   const dispatch = useDispatch()
-  const [isOpen, setIsOpen] = useState(false);
-  const [value,setValue]=useState()
 
-
-
-  const closeModal = () => {
-    setIsOpen(false);
-     setInterval(()=>{
-      window.location.replace("/login")
-    },5000)
-  };
   const {
     register, handleSubmit,
     getValues,
@@ -52,7 +42,10 @@ try {
 setErrMsg(res)
   }else{
     setErrMsg(res);
-    setValue(res.data.message)
+    setInterval(()=>{
+      // window.location.replace("/login")
+      navigation("/verificationCheck")
+    },5000)
    
   }
   setSubmit(false)
@@ -63,12 +56,6 @@ setErrMsg(res)
   }
 
   return (
-    <div className='w-full md:w-2/3 h-fit lg:h-full 2xl:h-5/6 py-8 lg:py-0 flex flex-row-reverse bg-primary rounded-xl overflow-hidden shadow-xl'>
-      {value?(<div>
-    <h6>{value}</h6>
-    <button onClick={closeModal}>_</button>
-    <Modal onClose={closeModal} />
-  </div>):(
     <div className='bg-bgColor w-full h-screen flex items-center justify-center p-6'>
       <div className='w-full md:w-2/3 h-fit lg:h-full 2xl:h-5/6 py-8 lg:py-0 flex flex-row-reverse bg-primary rounded-xl overflow-hidden shadow-xl'>
         {/* LEFT */}
@@ -141,9 +128,6 @@ setErrMsg(res)
       </div>
     </div>
       )}
-    </div>
-  )
-}
 
 
 

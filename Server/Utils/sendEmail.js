@@ -19,7 +19,7 @@ const sendVerificationEmail = async (user, res,token) => {
           pass: AUTH_PASSWORD,
         },
       });
-      const link =`${process.env.APP_URL}/vrify?token=${token}`
+      const link =`${process.env.APP_URL}/user/vrify/${token}`
     // Mail operations
     try {
         const hashToken = await hashStrting(token);

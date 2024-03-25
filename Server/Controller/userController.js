@@ -2,6 +2,7 @@ const UserSchema=require("../Models/Users")
 const bcrypt =require('bcryptjs');
 const sendVerificationEmail = require("../Utils/sendEmail");
 const { hashStrting, comparePassword, tokengenerator } = require("../Utils/jwt");
+const path = require('path');
 
 const register=async(req,res)=>{
     const {firstName,lastName,email,password,userName}=req.body;
@@ -76,13 +77,7 @@ const loginUser=async (req,res)=>{
     }
     // const token=
 
-    res.status(200).json({
-        status:'success',
-        message:'Authentication Successful',
-        data:{
-            user
-        }
-    })
+    res.sendFile(path.join(__dirname,''));
 }
 
 const profilesetion=async (req,res)=>{

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {useForm} from 'react-hook-form'
 import { BsShare } from "react-icons/bs";
@@ -11,7 +11,9 @@ import Loading from '../components/Loading';
 import CustomeButton from '../components/CustomeButton';
 import BgImage from '../assets/social-media-cropped.png';
 import axios from 'axios';
+import { UserLogin } from '../ReduX/userSlice';
 const Login = () => {
+  const navigation=useNavigate()
   const {
     register,handleSubmit,
     formState:{errors},
@@ -23,15 +25,21 @@ const Login = () => {
     try {
       const res= await axios.post('http://localhost:3001/login',data)
       console.log(res.data.data.user);
-      if(res.status===200){
-        localStorage.setItem('userId',`${res.data.data.user._id}`);
+      if(res.status===404){
+        setErrMsg(res)
+      }else{
+        setErrMsg('')
+        const newData={token:res?.token,...res?.user};
+        dispatch(UserLogin(newData))
         setInterval(()=>{
-          window.location.replace("/")
+          navigation('/')
+          // window.location.replace("/")
         },5000)
       }
-      
+      setSubmit(false)
     } catch (error) {
-console.log(error);      
+console.log(error);  
+setSubmit(false)    
     }
 
   }
@@ -40,10 +48,10 @@ console.log(error);
   const dispatch=useDispatch()
   return (
     <div className='bg-bgColor w-full h-screen flex items-center justify-center p-6'>
-      <div className='w-full md:w-2/3 h-fit lg:h-full 2xl:h-5/6 py-8 lg:py-0 flex bg-primary rounded-xl overflow-hidden shadow-xl'>
+      <div className='w-full md:w-2/3 h-fit lg:h-full 2xl:h-5/6 py-8 lg:py-0 flex flex-row-reverse bg-primary rounded-xl overflow-hidden shadow-xl'>
         {/* LEFT */}
         <div className='w-full lg:w-1/2 h-full p-10 2xl:px-20 flex flex-col justify-center'>
-          <div className='w-full flex gap-2 items-center mb-6'>
+        <div className='w-full flex gap-2 items-center mb-6'>
             <div className='p-2 bg-[#065ad8] rounded text-white'>
             <SlSocialStumbleupon />
             </div>

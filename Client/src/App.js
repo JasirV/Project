@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import ResetPassword from "./pages/ResetPassword";
 import {useSelector} from 'react-redux'
 import axios from 'axios'
+import VerificationCheck from "./components/VerificationCheck";
 const token=localStorage.getItem('token')
 export const Axios=axios.create({
   baseURL:'http://localhost:3001/',
@@ -37,6 +38,7 @@ function App() {
   <Route path="/register" element={<Register />} />
   <Route path="/login" element={<Login />} />
   <Route path="/reset-password" element={<ResetPassword />} />
+  <Route path="verificationCheck" element={<VerificationCheck />} />
 </Routes>
 
     </div>
