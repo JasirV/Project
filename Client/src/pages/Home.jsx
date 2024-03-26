@@ -7,6 +7,7 @@ import { friends, requests, user } from '../components/data'
 import { Link } from 'react-router-dom'
 import NoProfile from '../assets/ProfilePng.png'
 import CustomeButton from '../components/CustomeButton'
+import { BsPersonFillAdd } from 'react-icons/bs'
 
 const Home = () => {
   // const {user} =localStorage.getItem('userId')
@@ -31,7 +32,7 @@ const Home = () => {
           <div className='w-full bg-primary shadow-sm rounded-lg px-6 py-5'>
             <div className='flex item-center jstify-between text-xl text-ascente-1 pb-2 border-b border-[#66666645]'>
               <span>Friend Request</span>
-              <span>{friendRequest?.length}</span>
+              <span className='mx-3'>{friendRequest?.length}</span>
             </div>
             <div className='w-full flex flex-col gap-4 pt-4'>
               {friendRequest?.map((i)=>(
@@ -61,7 +62,28 @@ const Home = () => {
             <div className='flex items-center justuify-between tex-lg text-ascent-1 border-b border-[#66666645]'>
               <span>Friend Suggestion</span>
             </div>
-            <div className=''></div>
+            <div className='w-full flex flex-col gap-4 pt-4'>
+              {friendRequest.map((i)=>(
+                <div className=' flex items-center justify-between' key={i._id}>
+                  <Link to={`/profile/${i._id}`} key={i._id} className='w-full flex gap-4 items-center cursor-pointer'>
+                  <img src={i?.requestFrom?.profileUrl??NoProfile} alt={i.requestFrom?.firstName} className='w-10 h-10 object-cover rounder-full'/>
+                  <div className='flex-1'>
+                      <p className='text-base font-medium text-ascent-1'>
+                        {i?.requestFrom?.firstName}{i?.requestFrom?.lastName}
+                      </p>
+                      <span className='text-sm text-ascent-2'>
+                        {i.requestFrom?.profession??"No Profession"}
+                      </span>
+                    </div>
+                  </Link>
+                  <div className='flex gap-1'>
+                    <button className='bg-[#0444a430] text-sm text-white p-1 rounded' onClick={()=>{}}>
+                      <BsPersonFillAdd size={20} className='text-[#0f52b6]'/>
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
