@@ -19,7 +19,7 @@ export const Axios=axios.create({
 function Layout(){
   const {user}=useSelector(state=>state.user);
   const location=useLocation()
-  console.log(user);
+  // console.log(user);
   return user?.token?(
     <Outlet/>
   ):(<Navigate to="/login" state={{form:location}} replace />)

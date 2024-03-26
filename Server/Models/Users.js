@@ -11,89 +11,37 @@ const { stringify } = require('uuid');
 
 const UserSchema=new Schema(
     {
-        firstName:{
-            type:String,
-            require:true
+        firstName: {
+          type: String,
+          required: [true, "First Name is Required!"],
         },
-        lastName:{
-            type:String,
-            require:true
+        lastName: {
+          type: String,
+          required: [true, "Last Name is Required!"],
         },
-        email:{
-            type:String,
-            require:true,
-            unique:true
+        email: {
+          type: String,
+          required: [true, " Email is Required!"],
+          unique: true,
         },
-        password:{
-            type:String,
-            require:true
+        password: {
+          type: String,
+          required: [true, "Password is Required!"],
+          minlength: [6, "Password length should be greater than 6 character"],
+          select: true,
         },
-        userName:{
-            type:String,
-            trim:true,
-            unique:true,
-            text:true
-        },
-        brithYear:{
-            type:Number,
-            require:true,
-            trim:true
-        },
-        brithMonth:{
-            type:Number,
-            require:true,
-            trim:true
-        },
-        brithDay:{
-            type:Number,
-            require:true,
-            trim:true
-        },
-        gender:{
-            type:String,
-            eunm:["male","female"],
-            require:true
-        },
+        location: { type: String },
+        profession: { type: String },
+        friends: [{ type: Schema.Types.ObjectId, ref: "Users" }],
+        views: [{ type: String }],
+        verified: { type: Boolean, default: false },
         photo:{
             type:String,
             default:"https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
         },
-        cover:{type:String},
-        details:{
-            bio:{
-                type:String,
-            },
-            job:{
-                type:String
-            },
-            workPlace:{
-                type:String
-            },
-            highSchool:{
-                type:String
-            },
-            collage:{
-                type:String
-            },
-            currentCity:{
-                type:String,
-            },
-            homeTown:{
-                type:String
-            },
-            relationShip:{
-                type:String,
-                enum:["Single","Marrid","RelationShip"]
-            }
-        },
-        views:[{typoe:String}],
-        verified:{type:Boolean,default:false},
-        instagram:{
-            type:String
-        },
-    },
-    {timestamps:true}
-)
+      },
+      { timestamps: true }
+    );
 
 //Post removeing
 

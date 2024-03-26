@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {useForm} from 'react-hook-form'
@@ -28,13 +28,11 @@ const Login = () => {
       if(res.status===404){
         setErrMsg(res)
       }else{
+        console.log('hai');
         setErrMsg('')
-        const newData={token:res?.token,...res?.user};
-        dispatch(UserLogin(newData))
-        setInterval(()=>{
-          navigation('/')
-          // window.location.replace("/")
-        },5000)
+        navigation('/')
+        
+          
       }
       setSubmit(false)
     } catch (error) {

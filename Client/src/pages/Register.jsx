@@ -42,10 +42,11 @@ try {
 setErrMsg(res)
   }else{
     setErrMsg(res);
+    
     setInterval(()=>{
       // window.location.replace("/login")
       navigation("/verificationCheck")
-    },5000)
+    },3000)
    
   }
   setSubmit(false)

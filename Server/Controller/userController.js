@@ -1,6 +1,7 @@
 const UserSchema=require("../Models/Users")
+const passwordReset=require('../Models/resetPassword')
 const bcrypt =require('bcryptjs');
-const sendVerificationEmail = require("../Utils/sendEmail");
+const {sendVerificationEmail,resetPasswordLink} = require("../Utils/sendEmail");
 const { hashStrting, comparePassword, tokengenerator } = require("../Utils/jwt");
 const path = require('path');
 
@@ -77,22 +78,70 @@ const loginUser=async (req,res)=>{
     }
     // const token=
 
-    res.sendFile(path.join(__dirname,''));
+    res.status(201).json({
+        status:'succes',
+        message:'successfully loged',
+        data:{
+            user
+        }
+    })
 }
 
 //RESET PASSWORD
 
-const resetPassword=async(req,res)=>{
-    const {email}=req.boby;
-    const user=await UserSchema.findOne({email})
-    if(!user){
-        return res.status(404).json({
-            status:'fail',
-            message:'Email address not found'
-        })
-    }
-    const data=await 'hai'
-}
+// const requestPasswordReset=async(req,res)=>{
+//     const {email}=req.boby;
+//     const user=await UserSchema.findOne({email})
+//     if(!user){
+//         return res.status(404).json({
+//             status:'fail',
+//             message:'Email address not found'
+//         })
+//     }
+//     const olddata=await passwordReset.findOne({email});
+//     if(olddata){
+//         if(olddata.expiresAt>Date.now()){
+//             return res.status(201).json({
+//                 status:'Pending',
+//                 massage:'Rest Password link has already been set tp your email'
+//             })
+//         }
+//         await passwordReset.findOne({email});
+//     }
+//     await resetPasswordLink(user,res,user.token);
+// }
+// const resetPassword=async (req,res)=>{
+//     const {userId,token}=req.params;
+//     const user = await UserSchema.findById(userId)
+//     if(!user){
+//         return res.status(404).json({
+//             status:"fail",
+//             message:'This User Not Found '
+//         })
+//     }
+//     const ressetPassword=await passwordReset.findOne({userId})
+//     if(!ressetPassword){
+//         return res.status(404).json({
+//             status:'fail',
+//             message:'Invalied link please try again'
+//         })
+//     }
+//     const {expiresAt,token:resetToken}=resetPassword;
+//     if(expiresAt<Date.now()){
+//         return res.status(404).json({
+//             status:'fail',
+//             message:"Link as expried"
+//         })
+//     }else{
+//         const isMatch=await comparePassword(token,resetToken);
+//         if(!isMatch){
+//             return res.status(404).json({
+//                 status:'fail',
+//                 message:'Invalid Reset password Link'
+//             })
+//         }
+//     }
+// }
 
 const profilesetion=async (req,res)=>{
     const {userId}=req.body;
@@ -120,5 +169,5 @@ const profilesetion=async (req,res)=>{
 
 
 module.exports={
-    loginUser,register,profilesetion
+    loginUser,register,profilesetion,
 }
