@@ -13,6 +13,7 @@ import TextInput from '../components/TextInput'
 import { useForm } from 'react-hook-form'
 import Loading from '../components/Loading'
 import PostCard from '../components/PostCard'
+import EditProfile from '../components/EditProfile'
 
 const Home = () => {
   // const {user} =localStorage.getItem('userId')
@@ -27,6 +28,7 @@ const Home = () => {
   console.log(friendRequest);
   const handlePosrSubmit = async (data) => { }
   return (
+    <>
     <div className='home w-full px- lg:px-10 pb-20 2xl:px-40 bg-bgColor lg:rounded-lg h-screen overflow-hidden'>
       <TopBar />
       <div className='w-full flex gap-2 lg:gap-4 pt-5 pb-10 h-full'>
@@ -158,6 +160,7 @@ const Home = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 
