@@ -45,6 +45,40 @@ const CommentForm=({user,id,replayAt,getComments})=>{
   </form>
   )
 }
+const ReplayCard = ({reply,user,handleLike}) => {
+  return (
+    <div className='w-full py-3 '>
+        <div className='flex gap-3 items-center mb-1'>
+            <Link to={`/profile/${reply?.userId?._id}`}>
+                <img src={reply?.userId?.profileUrl ??NoProfile} alt={reply?.userId?.firstName} className='w-10 h-10 rounded-full object-cover' />
+            </Link>
+            <div>
+                <Link to={`/profile/${reply?.userId?._id}`}>
+                    <p className='font-medium text-base text-ascent-1'>
+                        {reply?.userId?.firstName}{reply?.userId?.lastName}
+                    </p>
+                </Link>
+                <span className='text-ascent-2 text-sm'>
+                    {moment(reply?.createdAt ?? "2024-05-27").fromNow()}
+                </span>
+            </div>
+        </div>
+        <div className='ml-12'>
+          <p className='text-ascent-2'>{reply?.comment}</p>
+          <div className='mt-2 flex gap-6'>
+            <p className='flex gap-2 items-center text-base text-ascent-2 cursor-pointer' onClick={handleLike}>
+              {reply?.likes?.includes(user?._id)?(
+                <BiSolidLike size={20} color='blue' />
+              ):(
+                <BiLike size={20} /> 
+               )}
+               {reply?.likes?.length} Likes
+            </p>
+          </div>
+        </div>
+    </div>
+  )
+}
 const PostCard = ({post,user,deletePost,likePost}) => {
     const [showAll,setShowAll]=useState(0)
     const [showReplay,setShowReplay]=useState(0);
@@ -59,6 +93,7 @@ const getComments = async () => {
   setLoading(false)
 }
 console.log(showComments);
+const handleLike =async()=>{}
   return (
     <div className='mb-2 bg-primary p-4 rounded-xl'>
         <div className='flex gap-3 items-center mb-2'>
@@ -148,8 +183,23 @@ console.log(showComments);
                         Reply
                       </span>
                     </div>
-                    {/* {replayComments ===c?._id&&()} */}
+                    {replayComments ===c?._id&&(
+                      <CommentForm user={user} id={c?._id} replayAt={c?.form} getComments={()=>getComments(post?._id)} />
+                    )}
                   </div>
+                  {/* REPLIES */}
+                  <div className='py-2 px-8 mt-6'>
+                    {c?.replies?.length >0 &&(
+                      <p className='text-base text-ascent-1 cursor-pointer' onClick={()=>setShowReplay(showReplay === c?.replies?._id ?0 :c?.replies?.length)}>Show Replies({c?.replies?.length})</p>
+                    )}
+                    {
+                      showReplay === c?.replies?._id &&
+                      c?.replies?.map((reply)=>(
+                        <ReplayCard reply={reply} user={user} key={reply?._id} handleLike={()=>handleLike(`/posts/like-comment/${c?._id}/${reply?._id}`)} />
+                      ))
+                    }
+                  </div>
+
                 </div>))
               ):(
                 <span className='flex text-sm py-4 text-ascent-2 text-center'>

@@ -21,8 +21,8 @@ const Home = () => {
   const [errMsg, setErrMsg] = useState('')
   const [friendRequest, setFriendRequest] = useState(requests)
   const [file, setFile] = useState('')
-  const [posting,setPosting]=useState(false)
-  const [loading,setloading]=useState(false)
+  const [posting, setPosting] = useState(false)
+  const [loading, setloading] = useState(false)
   const { register, handleSubmit, formState: { errors } } = useForm()
   console.log(friendRequest);
   const handlePosrSubmit = async (data) => { }
@@ -36,7 +36,7 @@ const Home = () => {
           <FriendsCard friends={users?.friends} />
         </div>
         {/* CENTER */}
-        <div className='flex-1 h-full bg-primary px-4 flex flex-col gap-6 overflow-y-auto rounded-lg'>
+        <div className='flex-1 h-full  px-4 flex flex-col gap-6 overflow-y-auto rounded-lg'>
           <form onSubmit={handleSubmit(handlePosrSubmit)} className='bg-primary px-4 rounded-lg'>
             <div className='w-full flex item-center gap-2 py-4 border-b border-[#66666645]'>
               <img src={user?.profileUrl ?? NoProfile} alt='UserImage' className='w-14 h-14 rounded-full object-cover' />
@@ -48,52 +48,52 @@ const Home = () => {
               </span>
             )}
             <div className='flex items-center justify-between py-4'>
-            <label htmlFor="imageUpload" className='flex items-center gap-1 text-base text-ascent-2 text-ascent-1 cursor-pointer'>
-  <BiImages />
-  <span>Image</span>
-  <input 
-    type="file" 
-    id="imageUpload" 
-    onChange={(e) => setFile(e.target.files[0])} 
-    className='hidden' 
-    data-max-size='5120' 
-    accept='.jpg,.png,.jpeg' 
-  />
-</label>
+              <label htmlFor="imageUpload" className='flex items-center gap-1 text-base text-ascent-2 text-ascent-1 cursor-pointer'>
+                <BiImages />
+                <span>Image</span>
+                <input
+                  type="file"
+                  id="imageUpload"
+                  onChange={(e) => setFile(e.target.files[0])}
+                  className='hidden'
+                  data-max-size='5120'
+                  accept='.jpg,.png,.jpeg'
+                />
+              </label>
 
-<label htmlFor="videoUpload" className='flex items-center gap-1 text-base text-ascent-2 text-ascent-1 cursor-pointer'>
-  <BiSolidVideo />
-  <span>Video</span>
-  <input 
-    type="file" 
-    id="videoUpload" 
-    onChange={(e) => setFile(e.target.files[0])} 
-    className='hidden' 
-    data-max-size='5120' 
-    accept='.mp4,.wav' 
-  />
-</label>
+              <label htmlFor="videoUpload" className='flex items-center gap-1 text-base text-ascent-2 text-ascent-1 cursor-pointer'>
+                <BiSolidVideo />
+                <span>Video</span>
+                <input
+                  type="file"
+                  id="videoUpload"
+                  onChange={(e) => setFile(e.target.files[0])}
+                  className='hidden'
+                  data-max-size='5120'
+                  accept='.mp4,.wav'
+                />
+              </label>
               <label htmlFor="vgifUpload" className='flex items-center gap-1 text-base text-ascent-2 text-ascent-1 cursor-pointer'>
                 <BsFiletypeGif />
                 <span>Gif </span>
                 <input type="file" id="vgifUpload" onChange={(e) => setFile(e.target.files[0])} className='hidden' data-max-size='5120' accept='.gif' />
               </label>
-              <div>{posting?(
+              <div>{posting ? (
                 <Loading />
-              ):(<CustomeButton type='submit' titile='post' containerStyle='bg-[#0444a4] text-white py-1 px-6 rounded-full font-semibold text-sm' />)}</div>
+              ) : (<CustomeButton type='submit' titile='post' containerStyle='bg-[#0444a4] text-white py-1 px-6 rounded-full font-semibold text-sm' />)}</div>
 
             </div>
           </form>
-          {loading?(<Loading />):posts?.length > 0 ? (
-            posts?.map((post)=>(
+          {loading ? (<Loading />) : posts?.length > 0 ? (
+            posts?.map((post) => (
               <PostCard key={post?._id} post={post}
-              user={user}
-              deletePost={()=>{}}
-              likePost={()=>{}} />
+                user={user}
+                deletePost={() => { }}
+                likePost={() => { }} />
             ))
-          ):(
+          ) : (
             <div className='flex w-full item-center justify-center'>
-            <p className='text-lg text-ascent-2'>No Post Available</p></div>
+              <p className='text-lg text-ascent-2'>No Post Available</p></div>
           )}
         </div>
         {/* RIGHT */}
